@@ -13,7 +13,7 @@ echo \
 sudo apt-get update
 
 #To install the latest version, run:
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
 #Test your Docker CE installation
 sudo docker run hello-world

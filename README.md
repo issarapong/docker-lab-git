@@ -67,9 +67,13 @@ $sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin
  $newgrp docker
 
   ```
-  # OR 
-  ```
+# OR 
+```
+wget https://raw.githubusercontent.com/issarapong/docker-lab-git/main/installDocker.sh
 chmod +x installDocker.sh
 ./installDocker.sh
 
 ```
+
+
+4.
