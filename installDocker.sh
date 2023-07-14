@@ -12,13 +12,13 @@ echo \
 # Update the apt package index
 sudo apt-get update
 
-#To install the latest version, run:
+#To install the latest version, run: (force Yes install)
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
 #Test your Docker CE installation
 sudo docker run hello-world
 # Create the docker group.
-sudo groupadd docker
+#sudo groupadd docker
 #Add your user to the docker group.
 sudo usermod -aG docker $USER
 #You can also run the following command to activate the changes to groups:
