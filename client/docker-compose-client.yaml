@@ -1,0 +1,55 @@
+networks:
+  ${NETWORK_NAME}-network:
+
+services:
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: ${SERVER_NAME}-node-exporter
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.rootfs=/rootfs"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+#    expose:
+ #     - 9100
+    ports:
+       - "9100:9100"
+    networks:
+      - ${NETWORK_NAME}-network
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    container_name: ${SERVER_NAME}-cadvisor
+    privileged: true
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    restart: unless-stopped
+    devices:
+      - /dev/kmsg
+#    expose:
+ #     - 8080
+    ports:
+      - "8080:8080"
+    networks:
+      - ${NETWORK_NAME}-network
+
+  promtail:
+    image: grafana/promtail
+    volumes:
+      - ./promtail/config:/etc/promtail
+      - /var/log:/var/log
+    command: -config.file=/etc/promtail/promtail.yaml
+    ports:
+      - 9080:9080
+    networks:
+      - ${NETWORK_NAME}-network
+volumes:
+  nginx-log:
